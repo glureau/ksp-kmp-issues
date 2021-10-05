@@ -23,6 +23,7 @@ kotlin {
         val commonMain by getting
         val commonTest by getting {
             dependencies {
+                implementation(project(":annotations"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
@@ -35,7 +36,12 @@ kotlin {
             }
         }
 
-        val jsMain by getting
+        val jsMain by getting {
+            kotlin.srcDir("build/generated/ksp/jsMain/kotlin")
+            dependencies {
+                configurations["ksp"].dependencies.add(project(":compiler"))
+            }
+        }
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))

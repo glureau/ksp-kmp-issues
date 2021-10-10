@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
     id("com.google.devtools.ksp")
     kotlin("multiplatform")
@@ -18,6 +20,16 @@ kotlin {
         binaries.executable()
     }
     jvm("android")
+
+    val xcf = XCFramework("KmpTest")
+    ios {
+        binaries {
+            framework("KmpTest") {
+                isStatic = true
+                xcf.add(this)
+            }
+        }
+    }
 
     sourceSets {
         val commonMain by getting

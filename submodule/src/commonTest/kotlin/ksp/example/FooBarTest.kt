@@ -7,6 +7,5 @@ class FooBarTest {
 
     @Test
     fun test() {
-        assertEquals(2, FooBar().compute())
     }
 }

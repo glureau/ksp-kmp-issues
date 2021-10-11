@@ -10,5 +10,6 @@ pluginManagement {
 rootProject.name = 'ksp-kmp-issues'
 include "annotations"
 include "compiler"
-include "mymodule"
+include 'submodule'
+include 'mymodule'
 

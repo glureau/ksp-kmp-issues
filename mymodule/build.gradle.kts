@@ -17,25 +17,18 @@ kotlin {
         }
         binaries.executable()
     }
-    jvm("android")
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(project(":annotations"))
+                implementation(project(":submodule"))
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-            }
-        }
-
-        val androidMain by getting
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
             }
         }
 

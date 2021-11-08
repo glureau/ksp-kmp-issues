@@ -34,9 +34,6 @@ kotlin {
 
         val jsMain by getting {
             kotlin.srcDir("build/generated/ksp/jsMain/kotlin")
-            dependencies {
-                configurations["ksp"].dependencies.add(project(":compiler"))
-            }
         }
         val jsTest by getting {
             dependencies {
@@ -44,4 +41,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    add("kspJs", project(":compiler"))
 }

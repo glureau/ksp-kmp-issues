@@ -7,11 +7,15 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
+import com.google.devtools.ksp.validate
 
 class Compiler(private val environment: SymbolProcessorEnvironment) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val symbol =
-            resolver.getSymbolsWithAnnotation(MyAnnotation::class.java.name).firstOrNull() ?: return emptyList()
+            resolver.getSymbolsWithAnnotation("ksp.example.MyAnnotation")
+                //.filter { it.validate() } // Fix by avoiding the file :(
+                .firstOrNull() ?: return emptyList()
+        environment.logger.warn("symbols = $symbol")
         symbol.accept(object : KSVisitorVoid() {
             override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
                 classDeclaration.getAllFunctions().forEach { func ->
@@ -26,7 +30,8 @@ class Compiler(private val environment: SymbolProcessorEnvironment) : SymbolProc
                 }
             }
         }, Unit)
-        return emptyList()
+        return resolver.getSymbolsWithAnnotation(MyAnnotation::class.java.name)
+            .filter { !it.validate() }.toList()
     }
 }
 

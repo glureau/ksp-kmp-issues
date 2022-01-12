@@ -19,10 +19,11 @@ interface Advanced<T> : Base<T>
 
 Using KSP on the `mymodule` will properly resolve `Advanced` super.
 
+```
 > Task :mymodule:kspKotlinMetadata
-w: [ksp] Supers of Base: 0
-w: [ksp] Supers of Advanced: 1
- 
+> w: [ksp] Supers of Advanced: 1
+```
+
 ---
 
 # Processing from another module: KO

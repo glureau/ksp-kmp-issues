@@ -1,6 +1,6 @@
 pluginManagement {
     plugins {
-        id("com.google.devtools.ksp") version "1.6.0-RC-1.0.1-RC"
+        id("com.google.devtools.ksp") version "1.6.0-1.0.2"
     }
     repositories {
         gradlePluginPortal()
@@ -10,6 +10,6 @@ pluginManagement {
 rootProject.name = 'ksp-kmp-issues'
 include "annotations"
 include "compiler"
-include 'submodule'
+include 'anothermodule'
 include 'mymodule'
 

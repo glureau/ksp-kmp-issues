@@ -1,9 +1,10 @@
 plugins {
+    id("com.google.devtools.ksp")
     kotlin("multiplatform")
 }
 
 kotlin {
-    js(IR) {
+    js(LEGACY) {
         browser {
             testTask {
                 // "./gradlew jsBrowserTest" produces JUnit XML reports.
@@ -18,7 +19,12 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":annotations"))
+                implementation(project(":mymodule"))
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -33,4 +39,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    add("kspMetadata", project(":compiler"))
 }

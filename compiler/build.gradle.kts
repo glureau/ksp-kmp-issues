@@ -12,7 +12,8 @@ dependencies {
         exclude(module = "kotlin-reflect")
     }
     implementation("com.squareup:kotlinpoet-ksp:1.10.2")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.0-RC-1.0.1-RC")
+    implementation("com.google.devtools.ksp:symbol-processing:1.6.0-1.0.2")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.0-1.0.2")
 
     testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.5")
     testImplementation("junit:junit:4.13.2")

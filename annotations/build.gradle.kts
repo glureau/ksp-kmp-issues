@@ -3,7 +3,7 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
+    js(LEGACY) {
         browser()
     }
     jvm("android")

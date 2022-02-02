@@ -11,17 +11,10 @@ import java.io.File
 class SlitMeVisitor(private val environment: SymbolProcessorEnvironment) : KSVisitorVoid() {
 
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
-        environment.logger.warn("----------------------------")
-        environment.logger.warn("visitFunctionDeclaration: $function")
         environment.logger.warn(function.declarations.joinToString { it.toString() })
         environment.logger.warn(function.location.toString())
         val fileLocation = function.location as FileLocation
         val lines = File(fileLocation.filePath).readLines().drop(fileLocation.lineNumber - 1)
-        environment.logger.warn("----------------------------")
-        lines.forEach {
-            environment.logger.warn("l: $it")
-        }
-        environment.logger.warn("----------------------------")
         val allLines = lines.joinToString("\n")
         // Find a better way to get start/end of the method, may be possible via KSP
         val content = allLines.substringAfter("\"\"\"")
@@ -31,31 +24,29 @@ class SlitMeVisitor(private val environment: SymbolProcessorEnvironment) : KSVis
 
         val splits = content.split("\${")
             .map { str ->
-                environment.logger.warn("-------- mapping str=$str")
                 var counter = 1
                 str.forEachIndexed { index, c ->
                     if (c == '{') counter++
                     if (c == '}') counter--
                     if (counter == 0) {
-                        environment.logger.warn("-------- terminal } at index=$index")
                         return@map listOf(
                             str.substring(0, index),
                             str.substring(index + 1, str.length)
                         )
                     }
                 }
-                environment.logger.error("-------- NO SPLIT? $str")
                 return@map listOf(str)
             }
         splits.forEach { s ->
-            environment.logger.warn("s: ${s[0]}")
-            environment.logger.warn("s: ${s.getOrNull(1)}")
             generatedCode += "\"\"\"" + s[0] + "\"\"\",\n"
             s.getOrNull(1)?.let { generatedCode += "\"\"\"$it\"\"\",\n" }
         }
         generatedCode += ")"
-        environment.logger.warn("----------------------------")
-        environment.codeGenerator.createNewFile(Dependencies(false), "ksp.example", "GeneratedCode")
+        environment.codeGenerator.createNewFile(
+            Dependencies(false, function.containingFile!!),
+            "ksp.example",
+            "GeneratedCode"
+        )
             .use {
                 it.write(generatedCode.toByteArray())
             }

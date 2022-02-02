@@ -8,14 +8,14 @@ repositories {
 
 dependencies {
     implementation(project(":annotations"))
-    implementation("com.squareup:kotlinpoet:1.10.1") {
+    implementation("com.squareup:kotlinpoet:1.10.2") {
         exclude(module = "kotlin-reflect")
     }
-    implementation("com.squareup:kotlinpoet-ksp:1.10.1")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.5.31-1.0.0")
+    implementation("com.squareup:kotlinpoet-ksp:1.10.2")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.2")
 
-    testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.4")
-    testImplementation("junit:junit:4.12")
+    testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.7")
+    testImplementation("junit:junit:4.13.2")
     testImplementation(kotlin("test"))
 }
 

@@ -6,18 +6,8 @@ plugins {
 kotlin {
     js(IR) {
         browser {
-            testTask {
-                // "./gradlew jsBrowserTest" produces JUnit XML reports.
-                // "./gradlew jsTest" is supposed to call jsBrowserTest but does NOT produce xml reports.
-                // Probably an issue, should check this later, also see Jenkinsfile (current kotlin version 1.4.30).
-                useKarma {
-                    useChromeHeadless()
-                }
-            }
         }
-        binaries.executable()
     }
-    jvm("android")
 
     sourceSets {
         val commonMain by getting
@@ -29,18 +19,8 @@ kotlin {
             }
         }
 
-        val androidMain by getting
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
-        }
-
         val jsMain by getting {
             kotlin.srcDir("build/generated/ksp/jsMain/kotlin")
-            dependencies {
-                configurations["ksp"].dependencies.add(project(":compiler"))
-            }
         }
         val jsTest by getting {
             dependencies {
@@ -48,4 +28,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    add("kspJs", project(":compiler"))
 }

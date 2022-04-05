@@ -4,5 +4,5 @@ import kotlin.reflect.KClass
 
 @Target(AnnotationTarget.FILE)
 annotation class MyFileAnnotation(
-    val klass: KClass<*>
+    val klasses: Array<KClass<*>>
 )

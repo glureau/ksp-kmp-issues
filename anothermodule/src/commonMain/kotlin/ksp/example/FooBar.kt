@@ -1,5 +1,7 @@
 @file:MyFileAnnotation(
-    klass = Advanced::class
+    klasses = [Advanced::class, Container::class]
 )
 
 package ksp.example
+
+

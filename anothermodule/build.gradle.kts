@@ -42,5 +42,5 @@ kotlin {
 }
 
 dependencies {
-    add("kspMetadata", project(":compiler"))
+    add("kspJs", project(":compiler"))
 }

@@ -1,13 +1,9 @@
 package ksp.example
 
 @MyAnnotation
-fun interface Base<T> {
-    fun provide(): T
-}
+data class Base(val data: String = "data")
 
 @MyAnnotation
-interface Advanced<T> : Base<T>
-
 class Container {
-    var base: Base<Int> = Base { 42 }
+    var base: Base = Base()
 }
